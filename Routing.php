@@ -12,7 +12,6 @@ class Routing
         session_start();
     }
 
-
     /**
      * Экшен должен вернуть false, если не смог обработать запрос.
      * @param string $pattern Регулярное выражение
@@ -77,12 +76,30 @@ class Routing
     }
 
     /**
-     * Отправляет статус 404 и загружает шаблон с ошибкой
+     * Отправляет статус 404
      */
     public static function e404()
     {
         header("HTTP/1.0 404 Not Found");
     }
 
+    /**
+     * @param $url
+     */
+    static public function redirect301($url)
+    {
+        header("HTTP/1.0 301 Moved Permanently");
+        header('Location: ' . $url);
+        exit;
+    }
+
+    /**
+     * @param $url
+     */
+    static public function redirect($url)
+    {
+        header('Location: ' . $url);
+        exit;
+    }
 
 }
