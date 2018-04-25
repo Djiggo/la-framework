@@ -29,7 +29,6 @@ class Routing
 
         $matches = array();
 
-
         $request_uri = array_key_exists('REQUEST_URI', $_SERVER) ? $_SERVER['REQUEST_URI'] : '';
         $parts = explode('?', $request_uri);
         $uri = $parts[0];
@@ -44,20 +43,9 @@ class Routing
                 $args[] = urldecode($arg_value);
             }
 
-
             if (substr(end($args), 0, 1) == "?") {
                 array_pop($args);
             }
-
-//            if ($_SERVER['REQUEST_METHOD'] != "POST") {
-//                $cached = \LA\Memcache::getVarByKey("page_" . $uri);
-//                if ($cached) {
-//                    $output = unserialize($cached);
-//                    echo $output;
-//                    $routed = true;
-//                    return;
-//                }
-//            }
 
             $args = array_values($args);
             self::$current_controller = array("name" => $handler, "args" => $args);
@@ -73,10 +61,6 @@ class Routing
             $routed = true;
 
             $output = ob_get_clean();
-
-//            if ($_SERVER['REQUEST_METHOD'] != "POST") {
-//                \LA\Memcache::setVarByKey("page_" . $uri, serialize($output), $cache_lifetime);
-//            }
 
             echo $output;
         }
