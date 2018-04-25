@@ -18,19 +18,15 @@ class Routing
      * @param string $pattern Регулярное выражение
      * @param string $handler Метод
      * @param string $method
-     * @param null $cache_lifetime
      */
-    public static function route($pattern, $handler, $method = "GET|POST", $cache_lifetime = null)
+    public static function match($pattern, $handler)
     {
         static $routed = false;
 
         if ($routed) {
             return;
         }
-        $methods = explode("|", $method);
-        if (!in_array($_SERVER['REQUEST_METHOD'], $methods)) {
-            return;
-        }
+
         $matches = array();
 
 
@@ -40,7 +36,7 @@ class Routing
 
         preg_match("|^" . $pattern . "$|i", $uri, $matches);
         if ($matches) {
-            $namespace_func = explode("->", $handler);
+
             unset($matches[0]);
 
             $args = array();
@@ -53,27 +49,22 @@ class Routing
                 array_pop($args);
             }
 
-            if ($_SERVER['REQUEST_METHOD'] != "POST") {
-                $cached = \LA\Memcache::getVarByKey("page_" . $uri);
-                if ($cached) {
-                    $output = unserialize($cached);
-                    echo $output;
-                    $routed = true;
-                    return;
-                }
-            }
+//            if ($_SERVER['REQUEST_METHOD'] != "POST") {
+//                $cached = \LA\Memcache::getVarByKey("page_" . $uri);
+//                if ($cached) {
+//                    $output = unserialize($cached);
+//                    echo $output;
+//                    $routed = true;
+//                    return;
+//                }
+//            }
 
             $args = array_values($args);
             self::$current_controller = array("name" => $handler, "args" => $args);
 
             ob_start();
 
-            if (count($namespace_func) == 2) {
-                $obj = new $namespace_func[0]();
-                $callback_status = call_user_func_array(array($obj, $namespace_func[1]), $args);
-            } else {
-                $callback_status = call_user_func_array($handler, $args);
-            }
+            $callback_status = call_user_func_array($handler, $args);
 
             if ($callback_status === false) {
                 return;
@@ -83,24 +74,12 @@ class Routing
 
             $output = ob_get_clean();
 
-            if ($_SERVER['REQUEST_METHOD'] != "POST") {
-                \LA\Memcache::setVarByKey("page_" . $uri, serialize($output), $cache_lifetime);
-            }
+//            if ($_SERVER['REQUEST_METHOD'] != "POST") {
+//                \LA\Memcache::setVarByKey("page_" . $uri, serialize($output), $cache_lifetime);
+//            }
 
             echo $output;
         }
-    }
-
-    /**
-     * @param $pattern
-     * @param callable $callable
-     * @param int|null $cache_lifetime
-     */
-    public static function match($pattern, $callable, $cache_lifetime = null)
-    {
-        // TODO
-
-        self::route($pattern, $callable[0] . "->" . $callable[1], "GET|POST", $cache_lifetime);
     }
 
     public static function getCurrentControllerWithArgs($with_action = true)
