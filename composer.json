@@ -1,8 +1,9 @@
 {
   "name": "djiggo/la-framework",
+  "type": "library",
   "autoload": {
     "psr-0" : {
-      "LA" : "./"
+      "LA" : ""
     }
   },
   "require": {
