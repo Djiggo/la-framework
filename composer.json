@@ -1,5 +1,5 @@
 {
-  "name": "LA/LA",
+  "name": "djiggo/la-framework",
   "autoload": {
     "psr-0" : {
       "LA" : "./"
