@@ -1,0 +1,11 @@
+{
+  "name": "LA/LA",
+  "autoload": {
+    "psr-0" : {
+      "LA" : "./"
+    }
+  },
+  "require": {
+    "php": "^5.6"
+  }
+}
