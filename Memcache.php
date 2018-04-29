@@ -41,12 +41,12 @@ class Memcache
         $memcache = self::getConnection();
 
         if (!$memcache) {
-            return;
+            throw new \Exception('No instance');
         }
 
         $full_key = self::getFullKey($key);
 
-        $value = @$memcache->get($full_key);
+        $value = $memcache->get($full_key);
 
         $value = unserialize($value);
 
