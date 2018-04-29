@@ -15,10 +15,8 @@ class Memcache
 
         $memcache_servers = \Config::$cache["memcache"];
 
-        if (\Config::$local_site) {
-            if (!class_exists(\Memcache::class)) {
-                return;
-            }
+        if (!class_exists(\Memcache::class)) {
+            return;
         }
 
         $memcache = new \Memcache;
