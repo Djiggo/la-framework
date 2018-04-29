@@ -13,13 +13,14 @@ class Memcache
             return $memcache;
         }
 
-        $conf = \Config::$cache["memcache"];
 
-        if (\Config::$local_site) {
-            if (!class_exists(\Memcache::class)) {
-                return;
-            }
+        $conf = \Config::$cache;
+
+        if (!array_key_exists("memcache", $conf)) {
+            return;
         }
+
+        $conf = \Config::$cache["memcache"];
 
         $memcache = new \Memcache;
         $memcache->connect($conf["host"], $conf["port"]);
