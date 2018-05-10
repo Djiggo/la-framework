@@ -34,7 +34,7 @@ class DBFactory
             $connects[$db_name]->query("SET NAMES utf8");
             return $connects[$db_name];
         } catch (\PDOException $e) {
-            $connects[$db_name]->error = $e->getMessage();
+            throw new \Exception($e->getMessage());
         }
     }
 }
