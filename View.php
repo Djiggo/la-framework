@@ -10,7 +10,7 @@ class View
         extract($params, EXTR_SKIP);
         ob_start();
 
-        include dirname(__DIR__) . DIRECTORY_SEPARATOR . $file;
+        include realpath($file);
 
         $contents = ob_get_contents();                                    // Get the contents of the buffer
         ob_end_clean();
