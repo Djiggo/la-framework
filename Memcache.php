@@ -13,7 +13,8 @@ class Memcache
             return $memcache;
         }
 
-        $memcache_servers = \Config::$cache["memcache"];
+        $conf_cache = \Config::get('cache');
+        $memcache_servers = $conf_cache["memcache"];
 
         if (!class_exists(\Memcache::class)) {
             return;
@@ -82,8 +83,9 @@ class Memcache
         if (!$memcache)
             return;
 
+        $conf_cache = \Config::get('cache');
+        $conf = $conf_cache["memcache"];
 
-        $conf = \Config::$cache["memcache"];
         $value = serialize($value);
 
         if ($lifetime === null) {

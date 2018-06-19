@@ -16,7 +16,7 @@ class DBFactory
             return $connects[$db_name];
         }
 
-        $conf = \Config::$db;
+        $conf = \Config::get('db');
         $conf = $conf[$db_name];
 
         if (!isset($conf)) {
