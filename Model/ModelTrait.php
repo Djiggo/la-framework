@@ -48,4 +48,34 @@ trait ModelTrait
 
     }
 
+    public function getAllIds()
+    {
+
+        $sql = "SELECT id FROM " . self::DB_TABLE_NAME;
+
+        return \LA\DB\DBWrapper::getColomn(self::DB_ID, $sql);
+
+    }
+
+
+    public function getBy($where_fields)
+    {
+
+
+        $sql = "SELECT id FROM " . self::DB_TABLE_NAME . " WHERE 1=1 AND ";
+        $params = [];
+
+
+        foreach ($where_fields as $key => $value) {
+
+            $sql .= $key . " = ?";
+            array_push($params, $where_fields);
+
+        }
+
+        return \LA\DB\DBWrapper::getColomn(self::DB_ID, $sql, $params);
+
+    }
+
+
 }
