@@ -48,17 +48,23 @@ trait ModelTrait
 
     }
 
-    public function getAllIds()
+
+
+    public function getAllIds($order_by = null)
     {
 
         $sql = "SELECT id FROM " . self::DB_TABLE_NAME;
+
+        if ($order_by) {
+            $sql .= " " . $order_by;
+        }
 
         return \LA\DB\DBWrapper::getColomn(self::DB_ID, $sql);
 
     }
 
 
-    public function getBy($where_fields)
+    public function getBy($where_fields, $order_by = null)
     {
 
 
@@ -73,9 +79,17 @@ trait ModelTrait
 
         }
 
+
+        if ($order_by) {
+            $sql .= " " . $order_by;
+        }
+
         return \LA\DB\DBWrapper::getColomn(self::DB_ID, $sql, $params);
 
     }
+
+
+
 
 
 }
