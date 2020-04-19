@@ -62,8 +62,7 @@ trait ModelTrait
         }
         
         if ($limit){
-            $sql .= " LIMIT ? ";
-            $args[] = $limit;
+            $sql .= " LIMIT " . $limit;
         }
         
 
