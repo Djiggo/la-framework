@@ -50,16 +50,24 @@ trait ModelTrait
 
 
 
-    public function getAllIds($order_by = null)
+    public function getAllIds($order_by = null, $limit=null)
     {
 
         $sql = "SELECT id FROM " . self::DB_TABLE_NAME;
 
+        $args = [];
+        
         if ($order_by) {
             $sql .= " " . $order_by;
         }
+        
+        if ($limit){
+            $sql .= " LIMIT ? ";
+            $args[] = $limit;
+        }
+        
 
-        return \LA\DB\DBWrapper::getColomn(self::DB_ID, $sql);
+        return \LA\DB\DBWrapper::getColomn(self::DB_ID, $sql, $args);
 
     }
 
