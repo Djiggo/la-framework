@@ -82,7 +82,7 @@ trait ModelTrait
         foreach ($where_fields as $key => $value) {
 
             $sql .= $key . " = ?";
-            array_push($params, $where_fields);
+            array_push($params, $value);
 
         }
 
