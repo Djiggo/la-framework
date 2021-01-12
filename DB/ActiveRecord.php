@@ -63,10 +63,19 @@ class ActiveRecord
 
         $reflect = new \ReflectionClass($model_obj);
 
+        $db_ignore_fields = [];
+
+        if (array_key_exists('DB_IGNORE_FIELDS', $reflect->getConstants())) {
+
+            $db_ignore_fields = $model_class_name::DB_IGNORE_FIELDS;
+
+        }
+
+
 
         foreach ($reflect->getProperties() as $property_obj) {
 
-            if (isset($model_class_name::DB_IGNORE_FIELDS) && in_array($property_obj->getName(), $model_class_name::DB_IGNORE_FIELDS)) {
+            if (in_array($property_obj->getName(), $db_ignore_fields)) {
 
                 continue;
 
