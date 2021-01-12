@@ -66,14 +66,14 @@ class ActiveRecord
 
         foreach ($reflect->getProperties() as $property_obj) {
 
-            if ($property_obj->isStatic()) {
-                continue; // игнорируем статические свойства класса - они относятся не к объекту, а только к классу (http://www.php.net/manual/en/language.oop5.static.php), и в них хранятся настройки ActiveRecord и CRUD
-            }
-
-            if ($model_class_name::IGNORE_FIELDS && in_array($model_class_name::IGNORE_FIELDS, $property_obj->getName())){
+            if ($model_class_name::IGNORE_FIELDS && in_array($model_class_name::ignore_fields, $property_obj->getName())){
 
                 continue;
 
+            }
+
+            if ($property_obj->isStatic()) {
+                continue; // игнорируем статические свойства класса - они относятся не к объекту, а только к классу (http://www.php.net/manual/en/language.oop5.static.php), и в них хранятся настройки ActiveRecord и CRUD
             }
 
             $property_obj->setAccessible(true);
