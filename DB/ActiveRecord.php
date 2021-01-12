@@ -66,7 +66,7 @@ class ActiveRecord
 
         foreach ($reflect->getProperties() as $property_obj) {
 
-            if ($model_class_name::DB_IGNORE_FIELDS && in_array($model_class_name::DB_IGNORE_FIELDS, $property_obj->getName())) {
+            if ($model_class_name::DB_IGNORE_FIELDS && in_array($property_obj->getName(), $model_class_name::DB_IGNORE_FIELDS)) {
 
                 continue;
 
