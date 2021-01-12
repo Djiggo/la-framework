@@ -70,6 +70,12 @@ class ActiveRecord
                 continue; // игнорируем статические свойства класса - они относятся не к объекту, а только к классу (http://www.php.net/manual/en/language.oop5.static.php), и в них хранятся настройки ActiveRecord и CRUD
             }
 
+            if ($model_class_name::IGNORE_FIELDS && in_array($model_class_name::IGNORE_FIELDS, $property_obj->getName())){
+
+                continue;
+
+            }
+
             $property_obj->setAccessible(true);
             $fields_to_save_arr[$property_obj->getName()] = $property_obj->getValue($model_obj);
         }
