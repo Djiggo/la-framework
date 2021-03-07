@@ -49,22 +49,21 @@ trait ModelTrait
     }
 
 
-
-    public function getAllIds($order_by = null, $limit=null)
+    public function getAllIds($order_by = null, $limit = null)
     {
 
         $sql = "SELECT id FROM " . self::DB_TABLE_NAME;
 
         $args = [];
-        
+
         if ($order_by) {
             $sql .= " " . $order_by;
         }
-        
-        if ($limit){
+
+        if ($limit) {
             $sql .= " LIMIT " . $limit;
         }
-        
+
 
         return \LA\DB\DBWrapper::getColomn(self::DB_ID, $sql, $args);
 
@@ -75,13 +74,13 @@ trait ModelTrait
     {
 
 
-        $sql = "SELECT id FROM " . self::DB_TABLE_NAME . " WHERE 1=1 AND ";
+        $sql = "SELECT id FROM " . self::DB_TABLE_NAME . " WHERE 1=1 ";
         $params = [];
 
 
         foreach ($where_fields as $key => $value) {
 
-            $sql .= $key . " = ?";
+            $sql .= "AND " . $key . " = ? ";
             array_push($params, $value);
 
         }
@@ -94,9 +93,6 @@ trait ModelTrait
         return \LA\DB\DBWrapper::getColomn(self::DB_ID, $sql, $params);
 
     }
-
-
-
 
 
 }
