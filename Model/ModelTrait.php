@@ -49,7 +49,7 @@ trait ModelTrait
     }
 
 
-    public function getAllIds($order_by = null, $limit = null)
+    public static function getAllIds($order_by = null, $limit = null)
     {
 
         $sql = "SELECT id FROM " . self::DB_TABLE_NAME;
@@ -70,7 +70,7 @@ trait ModelTrait
     }
 
 
-    public function getBy($where_fields, $order_by = null)
+    public static function getBy($where_fields, $order_by = null)
     {
 
 
